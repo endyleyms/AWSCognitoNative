@@ -1,11 +1,39 @@
 import React from "react";
 import { SafeAreaView, TextInput, StyleSheet, View, Text, Pressable} from 'react-native';
+import UserPool, {getAttributeList} from "../AWSCognito/UserPool";
 
 
 export default function StepTwo({navigation}){
-    const [user, setUser] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const [number, setNumber] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [confirm, setConfirm] = React.useState('');
+
+
+
+
+    const handleCreateUser  = async () =>{
+      const attributes = [
+        {
+          Name: 'email',
+          Value: email,
+        },
+        {
+          Name: 'phone_number',
+          Value: number,
+        }
+      ]
+
+      const attributeList = getAttributeList(attributes);
+      UserPool.signUp(email, password, attributeList, null, (err, data)=>{
+        if(err){
+          console.error(err);
+        }
+        console.log(data);
+        navigation.navigate('StepTree')
+      });
+     
+    }
 
     return(
         <>
@@ -21,9 +49,9 @@ export default function StepTwo({navigation}){
                     <View style={styles.container}>
                         <TextInput
                         style={styles.input}
-                        value={user}
-                        onChangeText={(text) =>setUser(text)}
-                        placeholder="User" />
+                        value={email}
+                        onChangeText={(text) =>setEmail(text)}
+                        placeholder="Email" />
                     </View>        
                     <View style={styles.container}>
                         <TextInput
@@ -43,14 +71,14 @@ export default function StepTwo({navigation}){
                     <View style={styles.container}>
                         <TextInput
                         style={styles.input}
-                        value={password}
+                        value={confirm}
                         secureTextEntry={true}
-                        onChangeText={(text) =>setPassword(text)}
+                        onChangeText={(text) =>setConfirm(text)}
                         placeholder="Repeat Password" />
                     </View>   
                 </View>  
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} onPress={() => navigation.navigate('StepTree')} >CREATE</Text>
+                    <Text style={styles.text} onPress={handleCreateUser} >CREATE</Text>
                 </Pressable>  
             </View>
         </SafeAreaView>
