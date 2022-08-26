@@ -45,8 +45,8 @@ const styles= StyleSheet.create({
     },
     buton:{
         backgroundColor: '#8100C7',
-        width: '70%',
-        height: '7%',
+        width: 240,
+        height: 50,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',

@@ -61,7 +61,7 @@ const styles= StyleSheet.create({
         backgroundColor: '#8100C7',
         width: 100,
         height: 100,
-        left:90,
+        left:110,
         borderRadius: 30
       },
       container:{
@@ -73,21 +73,22 @@ const styles= StyleSheet.create({
         marginVertical: 5,
         left:30,
         width: 250,
+        height:40
       },
       input:{
-        height: 30,
-        width:'100%',
+        height: 38,
+        width:230,
         backgroundColor: '#F7F7F7'
       },
       buton:{
         backgroundColor: '#8100C7',
-        width: '60%',
-        height: '15%',
+        width: 200,
+        height: 40,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
         borderRadius: 5,
-        left:60,
+        left:50,
         top:40
       },
       text:{

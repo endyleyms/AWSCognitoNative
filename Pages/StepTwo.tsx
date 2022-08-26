@@ -111,12 +111,13 @@ const styles= StyleSheet.create({
         paddingHorizontal: 10,
         marginVertical: 5,
         left:30,
-        width: 250,
+        width: 270,
+        height: 50
       },
 
       input:{
-        height: 30,
-        width:'100%',
+        height: 45,
+        width:240,
         backgroundColor: '#F7F7F7'
       },
       buton:{

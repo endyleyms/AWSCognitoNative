@@ -103,6 +103,7 @@ const styles= StyleSheet.create({
         marginVertical: 5,
         left:30,
         width: 200,
+        height: 40
       },
       containerIndicative:{
         backgroundColor: 'white',
@@ -113,11 +114,12 @@ const styles= StyleSheet.create({
         marginVertical: 5,
         left:30,
         width: 50,
+        height: 40
       },
 
       input:{
-        height: 30,
-        width:'100%',
+        height: 35,
+        width:180,
         backgroundColor: '#F7F7F7'
       },
       buton:{

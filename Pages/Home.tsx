@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     },
     butonL:{
       backgroundColor: '#FBAC00',
-      width: '60%',
-      height: '20%',
+      width: 240,
+      height: 40,
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   
     butonS:{
       backgroundColor: '#FFFFFF',
-      width: '60%',
-      height: '20%',
+      width: 240,
+      height: 40,
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',

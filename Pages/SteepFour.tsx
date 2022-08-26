@@ -111,19 +111,20 @@ const styles= StyleSheet.create({
         paddingHorizontal: 5,
         marginVertical: 5,
         left:5,
-        width: 50,
-        height:50
+        top: 1,
+        width: 60,
+        height:60
     },
     input:{
-        height: 50,
-        width:40,
+        height: 55,
+        width:50,
         backgroundColor: '#F7F7F7',
         alignContent:'center',
     },
     buton:{
         backgroundColor: '#8100C7',
-        width: '70%',
-        height: '7%',
+        width: 240,
+        height: 50,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
@@ -134,14 +135,14 @@ const styles= StyleSheet.create({
     },
     butonR:{
         backgroundColor: '#F7F7F7',
-        width: '50%',
-        height: '7%',
+        width: 200,
+        height: 45,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
         borderRadius: 5,
         position:'relative',
-        left:70,
+        left:60,
         top: 60
        
     },
