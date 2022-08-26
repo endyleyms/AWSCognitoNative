@@ -50,7 +50,7 @@ export default function StepTwo({navigation}){
                     </View>   
                 </View>  
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} onPress={() => navigation.navigate('StepTree')} >Create</Text>
+                    <Text style={styles.text} onPress={() => navigation.navigate('StepTree')} >CREATE</Text>
                 </Pressable>  
             </View>
         </SafeAreaView>

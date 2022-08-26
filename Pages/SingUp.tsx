@@ -38,7 +38,7 @@ export default function Login({navigation}){
             <Text style={styles.text2} onPress={() => navigation.navigate('Login')}>Login with user and password </Text>
 
             <Pressable style={styles.buton}>
-            <Text style={styles.text} onPress={() => navigation.navigate('StepTwo')} >Next</Text>
+            <Text style={styles.text} onPress={() => navigation.navigate('StepTwo')} >NEXT</Text>
             </Pressable>  
         </View>
 

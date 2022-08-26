@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import SingUp from './Pages/SingUp';
 import StepTwo from './Pages/StepTwo';
 import StepTree from './Pages/StepTree';
+import StepFour from './Pages/SteepFour';
 
 
 const Tab = createBottomTabNavigator();
@@ -76,6 +77,20 @@ export default function App() {
         component={StepTree}
         options={{
           title: 'StepTree',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+        name="StepFour" 
+        component={StepFour}
+        options={{
+          title: 'StepFour',
           headerStyle: {
             backgroundColor: '#2D0046',
           },

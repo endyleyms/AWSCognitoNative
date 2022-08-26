@@ -15,7 +15,7 @@ export default function StepTree({navigation}){
                 <Text style={styles.text2}>YOUR ACCOUNT HAS BEEN CREATED!</Text>
                 <View style={styles.circle}></View>
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} onPress={() => navigation.navigate('StepTree')}>Complete the profile</Text>
+                    <Text style={styles.text} onPress={() => navigation.navigate('StepFour')}>COMPLETE PROFILE</Text>
                 </Pressable>
             </View>
             

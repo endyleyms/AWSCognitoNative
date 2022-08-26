@@ -32,7 +32,7 @@ export default function Login({navigation}){
         <Text style={styles.text2} onPress={() => navigation.navigate('SingUp')}>Dont have an account? Sing up </Text>
 
         <Pressable style={styles.buton}>
-        <Text style={styles.text} >Login</Text>
+          <Text style={styles.text} >LOGIN</Text>
         </Pressable>
         
     </SafeAreaView>

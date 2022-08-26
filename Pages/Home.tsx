@@ -7,10 +7,10 @@ export default function Home({navigation}) {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#2D0046' }}>
         <View style={styles.homebuttons}>
           <Pressable style={styles.butonL}>
-            <Text style={styles.textL} onPress={() => navigation.navigate('Login')}>Login</Text>
+            <Text style={styles.textL} onPress={() => navigation.navigate('Login')}>LOGIN</Text>
           </Pressable>
           <Pressable style={styles.butonS}>
-            <Text onPress={() => navigation.navigate('SingUp')}>SingUp</Text>
+            <Text onPress={() => navigation.navigate('SingUp')}>SINGUP</Text>
           </Pressable> 
         </View>
   
