@@ -16,7 +16,7 @@ function HomeScreen({navigation}) {
           <Text style={styles.textL} onPress={() => navigation.navigate('Login')}>Login</Text>
         </Pressable>
         <Pressable style={styles.butonS}>
-          <Text>SingUp</Text>
+          <Text onPress={() => navigation.navigate('SingUp')}>SingUp</Text>
         </Pressable> 
       </View>
 
