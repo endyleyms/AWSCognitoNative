@@ -10,30 +10,32 @@ export default function Login({navigation}){
     return(
     <>
     <SafeAreaView style={styles.container1}>
-        <View style={styles.containerHello}>
-        </View>        
-        <View style={styles.container}>
-            <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={(text) =>setEmail(text)}
-            placeholder="Your email" />
-        </View>
-    
-        <View style={styles.container}>
-            <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={(text) =>setPasswor(text)}
-            secureTextEntry={true}
-            placeholder="Your password" />
-        </View>
-        <Text  style={styles.text1}>Forget your paswword?</Text>
-        <Text style={styles.text2} onPress={() => navigation.navigate('SingUp')}>Dont have an account? Sing up </Text>
+        <View style={styles.containerHello}></View>   
+        <View>
+          <View style={styles.container}>
+              <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={(text) =>setEmail(text)}
+              placeholder="Your email" />
+          </View>
+      
+          <View style={styles.container}>
+              <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={(text) =>setPasswor(text)}
+              secureTextEntry={true}
+              placeholder="Your password" />
+          </View>
+          <Text  style={styles.text1}>Forget your paswword?</Text>
+          <Text style={styles.text2} onPress={() => navigation.navigate('SingUp')}>Dont have an account? Sing up </Text>
 
-        <Pressable style={styles.buton}>
-          <Text style={styles.text} >LOGIN</Text>
-        </Pressable>
+          <Pressable style={styles.buton}>
+            <Text style={styles.text} onPress={() => navigation.navigate('TabScreen',{screen:'Profile'})} >LOGIN</Text>
+          </Pressable> 
+        </View>     
+        
         
     </SafeAreaView>
     </>
@@ -80,12 +82,13 @@ const styles= StyleSheet.create({
       buton:{
         backgroundColor: '#8100C7',
         width: '60%',
-        height: '7%',
+        height: '15%',
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
         borderRadius: 5,
-        left:40,
+        left:60,
+        top:40
       },
       text:{
         fontWeight: 'bold',
@@ -96,10 +99,12 @@ const styles= StyleSheet.create({
         fontWeight: 'bold',
         color: '#FBAC00',
         left:40,
+        padding: 5
       },
       text2:{
         position:'relative',
         fontWeight: 'bold',
         left:40,
+        padding: 5
       }
 })
