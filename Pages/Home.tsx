@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     butonL:{
       backgroundColor: '#FBAC00',
       width: '60%',
-      height: '40%',
+      height: '20%',
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     butonS:{
       backgroundColor: '#FFFFFF',
       width: '60%',
-      height: '40%',
+      height: '20%',
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',

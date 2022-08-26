@@ -72,7 +72,7 @@ const styles= StyleSheet.create({
         height: '90%',
         left: 35,
         top: '5%',
-        bottom: '20&',
+        bottom: 20,
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
         borderRadius:20
@@ -92,8 +92,8 @@ const styles= StyleSheet.create({
     },
     containerSelect:{
         backgroundColor: '#8100C7',
-        width: '30px',
-        height: '30px',
+        width: 30,
+        height: 30,
         borderRadius: 2
     },
     text:{

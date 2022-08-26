@@ -50,7 +50,7 @@ const styles= StyleSheet.create({
         height: '90%',
         left: 35,
         top: '5%',
-        bottom: '20&',
+        bottom: 20,
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
         display: 'flex',
@@ -59,8 +59,8 @@ const styles= StyleSheet.create({
       },
       containerHello:{
         backgroundColor: '#8100C7',
-        width: '100px',
-        height: '100px',
+        width: 100,
+        height: 100,
         left:90,
         borderRadius: 30
       },
