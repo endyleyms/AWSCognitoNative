@@ -53,6 +53,7 @@ const styles= StyleSheet.create({
         borderColor: '#e8e8e8',
         display: 'flex',
         justifyContent:'space-evenly',
+        borderRadius:20
       },
       containerHello:{
         backgroundColor: '#8100C7',

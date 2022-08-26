@@ -38,7 +38,7 @@ export default function Login({navigation}){
             <Text style={styles.text2} onPress={() => navigation.navigate('Login')}>Login with user and password </Text>
 
             <Pressable style={styles.buton}>
-            <Text style={styles.text} >Next</Text>
+            <Text style={styles.text} onPress={() => navigation.navigate('StepTwo')} >Next</Text>
             </Pressable>  
         </View>
 
@@ -61,6 +61,7 @@ const styles= StyleSheet.create({
         bottom: '20&',
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
+        borderRadius:20
       },
       container2:{
         position: 'relative',
