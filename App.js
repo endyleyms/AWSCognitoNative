@@ -1,27 +1,70 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View,Pressable } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Home from './Pages/Home';
+import Login from './Pages/Login';
+import SingUp from './Pages/SingUp';
+import StepTwo from './Pages/StepTwo';
+import StepTree from './Pages/StepTree';
+import StepFour from './Pages/SteepFour';
+import Profile from './Pages/Profile';
 
 
 const Tab = createBottomTabNavigator();
-function HomeScreen() {
+function TabScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#2D0046' }}>
-      <Text>Home Screen</Text>
-      <View style={styles.homebuttons}>
-        <Pressable style={styles.butonL}>
-          <Text style={styles.textL}>Login</Text>
-        </Pressable>
-        <Pressable style={styles.butonS}>
-          <Text style={styles.text}>SingUp</Text>
-        </Pressable> 
-      </View>
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
 
-      
-    </View>
+        if (route.name === 'Home') {
+          iconName = focused
+            ? 'home'
+            : 'home';
+        } else{
+          iconName = focused ? 'ios-person' : 'ios-person';
+        }
+
+        // You can return any component that you like here!
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: '#2D0046',
+      tabBarInactiveTintColor: 'gray',
+    })}
+    >
+      <Tab.Screen 
+      name="Home" 
+      component={Home}
+      options={{
+          title: 'Home',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+      }} />
+      <Tab.Screen 
+      name="Profile" 
+      component={Profile}
+      options={{
+        title: 'Profile',
+        headerStyle: {
+          backgroundColor: '#2D0046',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }} />
+    </Tab.Navigator>
   );
 }
+
+
 
 
 const Stack = createNativeStackNavigator();
@@ -29,40 +72,97 @@ export default function App() {
   return (
     <NavigationContainer>
      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen 
+        name="Home" 
+        component={Home}
+        options={{
+          title: 'Home',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+          name="TabScreen" 
+          component={TabScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="Login" 
+        component={Login}
+        options={{
+          title: 'Login',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+        name="SingUp" 
+        component={SingUp}
+        options={{
+          title: 'SingUp',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+        name="StepTwo" 
+        component={StepTwo}
+        options={{
+          title: 'StepTwo',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+        name="StepTree" 
+        component={StepTree}
+        options={{
+          title: 'StepTree',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
+        <Stack.Screen 
+        name="StepFour" 
+        component={StepFour}
+        options={{
+          title: 'StepFour',
+          headerStyle: {
+            backgroundColor: '#2D0046',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} 
+        />
       </Stack.Navigator> 
     </NavigationContainer>
     
   );
 }
-
-const styles = StyleSheet.create({
-  homebuttons:{
-    top:'30%',
-    width: '100%',
-    left: '20%'
-  },
-  butonL:{
-    backgroundColor: '#FBAC00',
-    width: '60%',
-    height: '40%',
-    padding: 10,
-    marginVertical: 5,
-    alignItems: 'center',
-    borderRadius: 5,
-    color:'#FFFFFF'
-  },
-  textL:{
-    color: '#FFFFFF',
-  },
-
-  butonS:{
-    backgroundColor: '#FFFFFF',
-    width: '60%',
-    height: '40%',
-    padding: 10,
-    marginVertical: 5,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-});
