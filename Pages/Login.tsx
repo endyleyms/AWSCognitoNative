@@ -56,7 +56,7 @@ export default function Login({navigation}){
               placeholder="Your password" />
           </View>
           <Text  style={styles.text1}>Forget your paswword?</Text>
-          <Text style={styles.text2} onPress={() => navigation.navigate('SingUp')}>Dont have an account? Sing up </Text>
+          <Text style={styles.text2} onPress={() => navigation.navigate('StepTwo')}>Dont have an account? Sing up </Text>
 
           <Pressable style={styles.buton}>
             <Text style={styles.text} onPress={handleLogin}>LOGIN</Text>

@@ -10,7 +10,7 @@ export default function Home({navigation}) {
             <Text style={styles.textL} onPress={() => navigation.navigate('Login')}>LOGIN</Text>
           </Pressable>
           <Pressable style={styles.butonS}>
-            <Text onPress={() => navigation.navigate('SingUp')}>SINGUP</Text>
+            <Text onPress={() => navigation.navigate('StepTwo')}>SINGUP</Text>
           </Pressable> 
         </View>
   

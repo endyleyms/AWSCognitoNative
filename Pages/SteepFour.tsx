@@ -30,10 +30,9 @@ export default function StepFour({navigation, route}){
         <>
         <SafeAreaView style={styles.container1}>
             <View style={styles.containerSteps}>
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('SingUp')}>1</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>2</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('StepTree')}>3</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}>4</Text></View>    
+                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>1</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('StepTree')}>2</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text}>3</Text></View>    
             </View>
             <View style={styles.container2}>
                 <View style={styles.containerSteps}>

@@ -7,10 +7,9 @@ export default function StepTree({navigation, route}){
         <>
         <SafeAreaView style={styles.container1}>
             <View style={styles.containerSteps}>
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('SingUp')}>1</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>2</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}>3</Text></View> 
-                <View style={styles.containerStep}><Text style={styles.text}>4</Text></View>    
+                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>1</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text}>2</Text></View> 
+                <View style={styles.containerStep}><Text style={styles.text}>3</Text></View>    
             </View>
             <View style={styles.container2}>
                 <Text style={styles.text2}>YOUR ACCOUNT HAS BEEN CREATED!</Text>

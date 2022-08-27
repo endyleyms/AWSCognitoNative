@@ -41,10 +41,9 @@ export default function StepTwo({navigation}){
         <>
         <SafeAreaView style={styles.container1}>
             <View style={styles.containerSteps}>
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('SingUp')}>1</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}>2</Text></View> 
-                <View style={styles.containerStep}><Text style={styles.text}>3</Text></View> 
-                <View style={styles.containerStep}><Text style={styles.text}>4</Text></View>    
+                <View style={styles.containerSelect}><Text style={styles.text}>1</Text></View> 
+                <View style={styles.containerStep}><Text style={styles.text}>2</Text></View> 
+                <View style={styles.containerStep}><Text style={styles.text}>3</Text></View>    
             </View>
             <View style={styles.container2}>
                 <View style={styles.containerInput}>
@@ -54,14 +53,7 @@ export default function StepTwo({navigation}){
                         value={email}
                         onChangeText={(text) =>setEmail(text)}
                         placeholder="Email" />
-                    </View>        
-                    <View style={styles.container}>
-                        <TextInput
-                        style={styles.input}
-                        value={number}
-                        onChangeText={(text) =>setNumber(text)}
-                        placeholder="Mobile number" />
-                    </View> 
+                    </View>         
                     <View style={styles.container}>
                         <TextInput
                         style={styles.input}
@@ -77,7 +69,15 @@ export default function StepTwo({navigation}){
                         secureTextEntry={true}
                         onChangeText={(text) =>setConfirm(text)}
                         placeholder="Repeat Password" />
-                    </View>   
+                    </View> 
+                                  
+                    <View style={styles.containerN}>
+                        <TextInput
+                        style={styles.inputN}
+                        value={number}
+                        onChangeText={(text) =>setNumber(text)}
+                        placeholder="+57 Mobile number" />
+                    </View>
                 </View>  
                 <Pressable style={styles.buton}>
                     <Text style={styles.text} onPress={handleCreateUser} >CREATE</Text>
@@ -141,13 +141,13 @@ const styles= StyleSheet.create({
         paddingHorizontal: 10,
         marginVertical: 5,
         left:30,
-        width: 270,
+        width: 250,
         height: 50
       },
 
       input:{
         height: 45,
-        width:240,
+        width:230,
         backgroundColor: '#F7F7F7'
       },
       buton:{
@@ -160,7 +160,7 @@ const styles= StyleSheet.create({
         borderRadius: 5,
         position:'relative',
         left:40,
-        top: 50
+        top: 40
       },
       text:{
         fontWeight: 'bold',
@@ -182,5 +182,21 @@ const styles= StyleSheet.create({
         left:40,
         color:'#8100C7',
         padding: 5
-      }
+      },
+      containerN:{
+        backgroundColor: 'white',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginVertical: 5,
+        left:30,
+        width: 250,
+        height: 40
+      },
+      inputN:{
+        height: 35,
+        width:230,
+        backgroundColor: '#F7F7F7'
+      },
 })
