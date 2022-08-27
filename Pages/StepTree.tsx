@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View, Text, Pressable} from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Pressable, Image} from 'react-native';
+import icono from '../assets/icono-chica.png'
 
 export default function StepTree({navigation, route}){
     const { params } = route.params;
@@ -13,7 +14,9 @@ export default function StepTree({navigation, route}){
             </View>
             <View style={styles.container2}>
                 <Text style={styles.text2}>YOUR ACCOUNT HAS BEEN CREATED!</Text>
-                <View style={styles.circle}></View>
+                <View style={styles.circle}>
+                    <Image source={icono} style={{ width: 100, height: 100, left: 8}}/>
+                </View>
                 <Pressable style={styles.buton}>
                     <Text style={styles.text} onPress={() => navigation.navigate('StepFour', { params: params})}>COMPLETE PROFILE</Text>
                 </Pressable>

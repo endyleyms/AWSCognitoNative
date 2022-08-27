@@ -1,7 +1,8 @@
 import React from "react";
-import { SafeAreaView, TextInput, StyleSheet, View, Text, Pressable} from 'react-native';
+import { SafeAreaView, TextInput, StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import UserPool from "../AWSCognito/UserPool";
 import {CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
+import user from '../assets/User.png'
 
 
 
@@ -37,7 +38,9 @@ export default function Login({navigation}){
     return(
     <>
     <SafeAreaView style={styles.container1}>
-        <View style={styles.containerHello}></View>   
+        <View style={styles.containerHello}>
+          <Image source={user} style={{ width: 90, height: 90, top: 4, left: 8}}/>
+        </View>   
         <View>
           <View style={styles.container}>
               <TextInput
