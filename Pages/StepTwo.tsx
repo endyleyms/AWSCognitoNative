@@ -30,7 +30,9 @@ export default function StepTwo({navigation}){
           console.error(err);
         }
         console.log(data);
-        navigation.navigate('StepTree')
+        navigation.navigate('StepTree', {
+          params:data.userSub  
+        })
       });
      
     }

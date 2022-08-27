@@ -1,8 +1,9 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable, TextInput} from 'react-native';
-import {cognitoUser} from "../AWSCognito/UserPool";
+import {getCognitoUser} from "../AWSCognito/UserPool";
 
-export default function StepFour({navigation}){
+export default function StepFour({navigation, route}){
+    const { params } = route.params;
     const [code, setCode] = React.useState('');
     const setDigitAtIndex = (num, index)=>{
         setCode((previousCode)=> [...previousCode.slice(0,index), num.trim()[0], ...previousCode.slice(index + 1, 6)].join('') )
@@ -11,6 +12,7 @@ export default function StepFour({navigation}){
 
     const handleConfirmRegister  = async () =>{
         console.log("code:  ", code.slice())
+        const cognitoUser = getCognitoUser(params);
         cognitoUser.confirmRegistration(code, true, function(err, result) {
             if (err) {
                 alert(err.message || JSON.stringify(err));

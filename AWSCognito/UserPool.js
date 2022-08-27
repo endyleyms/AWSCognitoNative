@@ -19,9 +19,14 @@ export const getAttributeList = (attributes = []) =>{
    
 }
 
-const userData={
-    Username: 'userSub',
-    Pool: new CognitoUserPool(poolData)
-}
 
-export const cognitoUser = new CognitoUser(userData);
+
+export const getCognitoUser =(username) =>{
+    const userData={
+        Username: username,
+        Pool: new CognitoUserPool(poolData)
+    }
+
+    return  new CognitoUser(userData);
+
+}
