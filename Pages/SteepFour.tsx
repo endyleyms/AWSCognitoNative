@@ -1,11 +1,28 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable, TextInput} from 'react-native';
+import {getCognitoUser} from "../AWSCognito/UserPool";
 
-export default function StepFour({navigation}){
-    const [one, setOne] = React.useState('');
-    const [two, setTwo] = React.useState('');
-    const [tree, setTree] = React.useState('');
-    const [four, setFour] = React.useState('');
+export default function StepFour({navigation, route}){
+    const { params } = route.params;
+    const [code, setCode] = React.useState('');
+    const setDigitAtIndex = (num, index)=>{
+        setCode((previousCode)=> [...previousCode.slice(0,index), num.trim()[0], ...previousCode.slice(index + 1, 6)].join('') )
+    }
+    console.log(code)
+
+    const handleConfirmRegister  = async () =>{
+        console.log("code:  ", code.slice())
+        const cognitoUser = getCognitoUser(params);
+        cognitoUser.confirmRegistration(code, true, function(err, result) {
+            if (err) {
+                alert(err.message || JSON.stringify(err));
+                return;
+            }
+            console.log('call result: ' + result);
+        });
+        navigation.navigate('TabScreen', {
+            screen: 'Profile',})    
+    }
 
 
 
@@ -13,39 +30,52 @@ export default function StepFour({navigation}){
         <>
         <SafeAreaView style={styles.container1}>
             <View style={styles.containerSteps}>
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('SingUp')}>1</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>2</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('StepTree')}>3</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}>4</Text></View>    
+                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>1</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('StepTree')}>2</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text}>3</Text></View>    
             </View>
             <View style={styles.container2}>
                 <View style={styles.containerSteps}>
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={one}
-                        onChangeText={(text) =>setOne(text)}
+                        value={code[0]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 0)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={two}
-                        onChangeText={(text) =>setTwo(text)}
+                        value={code[1]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 1)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={tree}
-                        onChangeText={(text) =>setTree(text)}
+                        value={code[2]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 2)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={four}
-                        onChangeText={(text) =>setFour(text)}
+                        value={code[3]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 3)}
+                    />
+                    </View>
+                    <View style={styles.containerNumber}>
+                        <TextInput
+                        style={styles.input}
+                        value={code[4]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 4)}
+                    />
+                    </View> 
+                    <View style={styles.containerNumber}>
+                        <TextInput
+                        style={styles.input}
+                        value={code[5]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 5)}
                     />
                     </View> 
                 </View>
@@ -54,7 +84,7 @@ export default function StepFour({navigation}){
                     <Text style={styles.textR} >RESEND</Text>
                 </Pressable> 
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} >VERIFY</Text>
+                    <Text style={styles.text} onPress={handleConfirmRegister}>VERIFY</Text>
                 </Pressable>
 
             </View>
@@ -72,7 +102,7 @@ const styles= StyleSheet.create({
         height: '90%',
         left: 35,
         top: '5%',
-        bottom: '20&',
+        bottom: 20,
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
         borderRadius:20
@@ -92,8 +122,8 @@ const styles= StyleSheet.create({
     },
     containerSelect:{
         backgroundColor: '#8100C7',
-        width: '30px',
-        height: '30px',
+        width: 30,
+        height: 30,
         borderRadius: 2
     },
     text:{
@@ -111,19 +141,20 @@ const styles= StyleSheet.create({
         paddingHorizontal: 5,
         marginVertical: 5,
         left:5,
-        width: 50,
+        top: 1,
+        width: 40,
         height:50
     },
     input:{
-        height: 50,
-        width:40,
+        height: 45,
+        width:30,
         backgroundColor: '#F7F7F7',
         alignContent:'center',
     },
     buton:{
         backgroundColor: '#8100C7',
-        width: '70%',
-        height: '7%',
+        width: 240,
+        height: 50,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
@@ -134,14 +165,14 @@ const styles= StyleSheet.create({
     },
     butonR:{
         backgroundColor: '#F7F7F7',
-        width: '50%',
-        height: '7%',
+        width: 200,
+        height: 45,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
         borderRadius: 5,
         position:'relative',
-        left:70,
+        left:60,
         top: 60
        
     },

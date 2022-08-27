@@ -10,7 +10,7 @@ export default function Home({navigation}) {
             <Text style={styles.textL} onPress={() => navigation.navigate('Login')}>LOGIN</Text>
           </Pressable>
           <Pressable style={styles.butonS}>
-            <Text onPress={() => navigation.navigate('SingUp')}>SINGUP</Text>
+            <Text onPress={() => navigation.navigate('StepTwo')}>SINGUP</Text>
           </Pressable> 
         </View>
   
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     },
     butonL:{
       backgroundColor: '#FBAC00',
-      width: '60%',
-      height: '40%',
+      width: 240,
+      height: 40,
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   
     butonS:{
       backgroundColor: '#FFFFFF',
-      width: '60%',
-      height: '40%',
+      width: 240,
+      height: 40,
       padding: 10,
       marginVertical: 5,
       alignItems: 'center',

@@ -25,7 +25,7 @@ const styles= StyleSheet.create({
         height: '90%',
         left: 35,
         top: '5%',
-        bottom: '20&',
+        bottom: 20,
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
         borderRadius:20
@@ -45,8 +45,8 @@ const styles= StyleSheet.create({
     },
     buton:{
         backgroundColor: '#8100C7',
-        width: '70%',
-        height: '7%',
+        width: 240,
+        height: 50,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
@@ -57,8 +57,8 @@ const styles= StyleSheet.create({
     },
     circle:{
         backgroundColor: '#8100C7',
-        width: '110px',
-        height: '110px',
+        width: 110,
+        height: 110,
         borderRadius: 60,
         left: 100
     },

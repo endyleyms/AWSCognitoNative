@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
-import SingUp from './Pages/SingUp';
 import StepTwo from './Pages/StepTwo';
 import StepTree from './Pages/StepTree';
 import StepFour from './Pages/SteepFour';
@@ -34,19 +33,6 @@ function TabScreen() {
       tabBarInactiveTintColor: 'gray',
     })}
     >
-      <Tab.Screen 
-      name="Home" 
-      component={Home}
-      options={{
-          title: 'Home',
-          headerStyle: {
-            backgroundColor: '#2D0046',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-      }} />
       <Tab.Screen 
       name="Profile" 
       component={Profile}
@@ -96,20 +82,6 @@ export default function App() {
         component={Login}
         options={{
           title: 'Login',
-          headerStyle: {
-            backgroundColor: '#2D0046',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }} 
-        />
-        <Stack.Screen 
-        name="SingUp" 
-        component={SingUp}
-        options={{
-          title: 'SingUp',
           headerStyle: {
             backgroundColor: '#2D0046',
           },

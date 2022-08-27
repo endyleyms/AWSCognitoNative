@@ -1,21 +1,21 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable} from 'react-native';
 
-export default function StepTree({navigation}){
+export default function StepTree({navigation, route}){
+    const { params } = route.params;
     return(
         <>
         <SafeAreaView style={styles.container1}>
             <View style={styles.containerSteps}>
-                <View style={styles.containerSelect}><Text style={styles.text} onPress={() => navigation.navigate('SingUp')}>1</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>2</Text></View> 
-                <View style={styles.containerSelect}><Text style={styles.text}>3</Text></View> 
-                <View style={styles.containerStep}><Text style={styles.text}>4</Text></View>    
+                <View style={styles.containerSelect}><Text style={styles.text}  onPress={() => navigation.navigate('StepTwo')}>1</Text></View> 
+                <View style={styles.containerSelect}><Text style={styles.text}>2</Text></View> 
+                <View style={styles.containerStep}><Text style={styles.text}>3</Text></View>    
             </View>
             <View style={styles.container2}>
                 <Text style={styles.text2}>YOUR ACCOUNT HAS BEEN CREATED!</Text>
                 <View style={styles.circle}></View>
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} onPress={() => navigation.navigate('StepFour')}>COMPLETE PROFILE</Text>
+                    <Text style={styles.text} onPress={() => navigation.navigate('StepFour', { params: params})}>COMPLETE PROFILE</Text>
                 </Pressable>
             </View>
             
@@ -31,7 +31,7 @@ const styles= StyleSheet.create({
         height: '90%',
         left: 35,
         top: '5%',
-        bottom: '20&',
+        bottom: 20,
         backgroundColor: '#FFFFFF',
         borderColor: '#e8e8e8',
         borderRadius:20
@@ -44,14 +44,14 @@ const styles= StyleSheet.create({
     },
     containerSelect:{
         backgroundColor: '#8100C7',
-        width: '30px',
-        height: '30px',
+        width: 30,
+        height: 30,
         borderRadius: 2
     },
     containerStep:{
         backgroundColor: '#801BC452',
-        width: '30px',
-        height: '30px',
+        width: 30,
+        height: 30,
         borderRadius: 2
     },
     text:{
@@ -69,8 +69,8 @@ const styles= StyleSheet.create({
     },
     buton:{
         backgroundColor: '#8100C7',
-        width: '70%',
-        height: '7%',
+        width: 240,
+        height: 50,
         padding: 10,
         marginVertical: 5,
         alignItems: 'center',
@@ -81,8 +81,8 @@ const styles= StyleSheet.create({
     },
     circle:{
         backgroundColor: '#8100C7',
-        width: '110px',
-        height: '110px',
+        width: 110,
+        height: 110,
         borderRadius: 60,
         left: 100
     },
