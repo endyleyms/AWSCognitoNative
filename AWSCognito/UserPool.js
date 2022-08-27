@@ -18,3 +18,10 @@ export const getAttributeList = (attributes = []) =>{
     return attributes.map((attribute) =>  new CognitoUserAttribute(attribute))
    
 }
+
+const userData={
+    Username: 'userSub',
+    Pool: new CognitoUserPool(poolData)
+}
+
+export const cognitoUser = new CognitoUser(userData);

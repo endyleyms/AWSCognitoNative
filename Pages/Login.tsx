@@ -1,10 +1,37 @@
 import React from "react";
 import { SafeAreaView, TextInput, StyleSheet, View, Text, Pressable} from 'react-native';
+import UserPool from "../AWSCognito/UserPool";
+import {CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
+
 
 
 export default function Login({navigation}){
     const [email, setEmail] = React.useState('');
     const [password, setPasswor] = React.useState('');
+
+    const handleLogin = () =>{
+      const user = new CognitoUser({
+        Username: email,
+        Pool: UserPool
+      });
+      const authDetails= new AuthenticationDetails({
+        Username: email,
+        Password: password
+      });
+      user.authenticateUser(authDetails, {
+        onSuccess: (data)=>{
+          console.log("onSuccess: ", data)
+        },
+        onFailure:(err) => {
+          console.error("onFailure: ", err)
+        },
+        newPasswordRequired: (data)=>{
+          console.log("newPasswordRequiered: ", data)
+        },
+      });
+      navigation.navigate('TabScreen', {
+        screen: 'Profile',})
+    }
 
 
     return(
@@ -32,7 +59,7 @@ export default function Login({navigation}){
           <Text style={styles.text2} onPress={() => navigation.navigate('SingUp')}>Dont have an account? Sing up </Text>
 
           <Pressable style={styles.buton}>
-            <Text style={styles.text} onPress={() => navigation.navigate('TabScreen',{screen:'Profile'})} >LOGIN</Text>
+            <Text style={styles.text} onPress={handleLogin}>LOGIN</Text>
           </Pressable> 
         </View>     
         

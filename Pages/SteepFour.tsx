@@ -1,11 +1,26 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable, TextInput} from 'react-native';
+import {cognitoUser} from "../AWSCognito/UserPool";
 
 export default function StepFour({navigation}){
-    const [one, setOne] = React.useState('');
-    const [two, setTwo] = React.useState('');
-    const [tree, setTree] = React.useState('');
-    const [four, setFour] = React.useState('');
+    const [code, setCode] = React.useState('');
+    const setDigitAtIndex = (num, index)=>{
+        setCode((previousCode)=> [...previousCode.slice(0,index), num.trim()[0], ...previousCode.slice(index + 1, 6)].join('') )
+    }
+    console.log(code)
+
+    const handleConfirmRegister  = async () =>{
+        console.log("code:  ", code.slice())
+        cognitoUser.confirmRegistration(code, true, function(err, result) {
+            if (err) {
+                alert(err.message || JSON.stringify(err));
+                return;
+            }
+            console.log('call result: ' + result);
+        });
+        navigation.navigate('TabScreen', {
+            screen: 'Profile',})    
+    }
 
 
 
@@ -23,29 +38,43 @@ export default function StepFour({navigation}){
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={one}
-                        onChangeText={(text) =>setOne(text)}
+                        value={code[0]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 0)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={two}
-                        onChangeText={(text) =>setTwo(text)}
+                        value={code[1]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 1)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={tree}
-                        onChangeText={(text) =>setTree(text)}
+                        value={code[2]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 2)}
                     />
                     </View> 
                     <View style={styles.containerNumber}>
                         <TextInput
                         style={styles.input}
-                        value={four}
-                        onChangeText={(text) =>setFour(text)}
+                        value={code[3]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 3)}
+                    />
+                    </View>
+                    <View style={styles.containerNumber}>
+                        <TextInput
+                        style={styles.input}
+                        value={code[4]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 4)}
+                    />
+                    </View> 
+                    <View style={styles.containerNumber}>
+                        <TextInput
+                        style={styles.input}
+                        value={code[5]}
+                        onChangeText={(text) =>setDigitAtIndex(text, 5)}
                     />
                     </View> 
                 </View>
@@ -54,7 +83,7 @@ export default function StepFour({navigation}){
                     <Text style={styles.textR} >RESEND</Text>
                 </Pressable> 
                 <Pressable style={styles.buton}>
-                    <Text style={styles.text} >VERIFY</Text>
+                    <Text style={styles.text} onPress={handleConfirmRegister}>VERIFY</Text>
                 </Pressable>
 
             </View>
@@ -112,12 +141,12 @@ const styles= StyleSheet.create({
         marginVertical: 5,
         left:5,
         top: 1,
-        width: 60,
-        height:60
+        width: 40,
+        height:50
     },
     input:{
-        height: 55,
-        width:50,
+        height: 45,
+        width:30,
         backgroundColor: '#F7F7F7',
         alignContent:'center',
     },

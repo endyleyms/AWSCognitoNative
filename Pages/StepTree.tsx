@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable} from 'react-native';
 
 export default function StepTree({navigation}){
+    
     return(
         <>
         <SafeAreaView style={styles.container1}>
