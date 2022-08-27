@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View, Text, Pressable} from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Pressable, Image} from 'react-native';
+import icono from '../assets/icono-chica.png'
 
 export default function Profile({navigation}){
     return(
@@ -7,7 +8,9 @@ export default function Profile({navigation}){
         <SafeAreaView style={styles.container1}>
             <View style={styles.container2}>
                 <Text style={styles.text2}>YOUR PROFILE ACCOUNT IS DONE!</Text>
-                <View style={styles.circle}></View>
+                <View style={styles.circle}>
+                    <Image source={icono} style={{ width: 100, height: 100, left: 8}}/>
+                </View>
                 <Pressable style={styles.buton}>
                     <Text style={styles.text} onPress={() => navigation.navigate('StepFour')}>END</Text>
                 </Pressable>
