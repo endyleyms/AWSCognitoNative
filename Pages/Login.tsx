@@ -40,7 +40,7 @@ export default function Login({navigation}){
     <SafeAreaView style={styles.container1}>
         <View style={styles.containerHello}>
           <Image source={user} style={{ width: 90, height: 90, top: 4, left: 8}}/>
-        </View>   
+        </View> 
         <View>
           <View style={styles.container}>
               <TextInput
@@ -49,7 +49,6 @@ export default function Login({navigation}){
               onChangeText={(text) =>setEmail(text)}
               placeholder="Your email" />
           </View>
-      
           <View style={styles.container}>
               <TextInput
               style={styles.input}
@@ -62,11 +61,9 @@ export default function Login({navigation}){
           <Text style={styles.text2} onPress={() => navigation.navigate('StepTwo')}>Dont have an account? Sing up </Text>
 
           <Pressable style={styles.buton}>
-            <Text style={styles.text} onPress={handleLogin}>LOGIN</Text>
-          </Pressable> 
-        </View>     
-        
-        
+            <Text style={styles.text} onPress={()=>  navigation.navigate('TabScreen', {screen: 'Profile',}) }>LOGIN</Text>
+          </Pressable>
+        </View>
     </SafeAreaView>
     </>
     );

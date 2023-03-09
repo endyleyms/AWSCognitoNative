@@ -22,8 +22,6 @@ function TabScreen() {
           iconName = focused
             ? 'home'
             : 'home';
-        } else{
-          iconName = focused ? 'ios-person' : 'ios-person';
         }
 
         // You can return any component that you like here!
@@ -33,11 +31,11 @@ function TabScreen() {
       tabBarInactiveTintColor: 'gray',
     })}
     >
-      <Tab.Screen 
-      name="Profile" 
+      <Tab.Screen
+      name="Profile"
       component={Profile}
       options={{
-        title: 'Profile',
+        title: 'Galery',
         headerStyle: {
           backgroundColor: '#2D0046',
         },
@@ -58,8 +56,8 @@ export default function App() {
   return (
     <NavigationContainer>
      <Stack.Navigator>
-        <Stack.Screen 
-        name="Home" 
+        <Stack.Screen
+        name="Home"
         component={Home}
         options={{
           title: 'Home',
@@ -70,15 +68,15 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
+        }}
         />
-        <Stack.Screen 
-          name="TabScreen" 
+        <Stack.Screen
+          name="TabScreen"
           component={TabScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen 
-        name="Login" 
+        <Stack.Screen
+        name="Login"
         component={Login}
         options={{
           title: 'Login',
@@ -89,10 +87,10 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
+        }}
         />
-        <Stack.Screen 
-        name="StepTwo" 
+        <Stack.Screen
+        name="StepTwo"
         component={StepTwo}
         options={{
           title: 'StepTwo',
@@ -103,10 +101,10 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
+        }}
         />
-        <Stack.Screen 
-        name="StepTree" 
+        <Stack.Screen
+        name="StepTree"
         component={StepTree}
         options={{
           title: 'StepTree',
@@ -117,10 +115,10 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
+        }}
         />
-        <Stack.Screen 
-        name="StepFour" 
+        <Stack.Screen
+        name="StepFour"
         component={StepFour}
         options={{
           title: 'StepFour',
@@ -131,10 +129,9 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }} 
+        }}
         />
-      </Stack.Navigator> 
+      </Stack.Navigator>
     </NavigationContainer>
-    
   );
 }

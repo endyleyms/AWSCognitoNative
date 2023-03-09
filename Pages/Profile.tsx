@@ -1,26 +1,78 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, View, Text, Pressable, Image} from 'react-native';
-import icono from '../assets/icono-chica.png'
+import React from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar, Image, Dimensions } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import IosZoomImage from './Components/IosZoomImage';
+
+const { width, height } = Dimensions.get('window');
+
+const images = [
+    {
+      source: {
+        uri: 'https://static.scientificamerican.com/sciam/cache/…le/7A715AD8-449D-4B5A-ABA2C5D92D9B5A21_source.png',
+      },
+    },
+    {
+      source: {
+        uri: 'https://example.com/image2.jpg',
+      },
+    },
+    // add more images here
+  ];
+
+const ChatScreen = () => {
+    return (
+        <View style={styles.container}>
+         {/* <Image source={{uri: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq'}} style={styles.images} resizeMode="contain" /> */}
+            <IosZoomImage ImageUrl={'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq'} />
+        </View>
+    );
+}
+
+const StatutScreen = () => {
+    return (
+        <View style={styles.container}>
+            <IosZoomImage ImageUrl={ 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'} />
+        </View>
+    );
+}
+
+const CallScreen = () => {
+    return (
+        <View style={styles.container}>
+            <IosZoomImage ImageUrl={ 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg'} />
+        </View>
+    );
+}
+
+const Tab = createMaterialTopTabNavigator();
 
 export default function Profile({navigation}){
     return(
         <>
-        <SafeAreaView style={styles.container1}>
-            <View style={styles.container2}>
-                <Text style={styles.text2}>YOUR PROFILE ACCOUNT IS DONE!</Text>
-                <View style={styles.circle}>
-                    <Image source={icono} style={{ width: 100, height: 100, left: 8}}/>
-                </View>
-                <Pressable style={styles.buton}>
-                    <Text style={styles.text} onPress={() => navigation.navigate('StepFour')}>END</Text>
-                </Pressable>
-            </View>
-            
-        </SafeAreaView>
+        <NavigationContainer independent={true}>
+            <Tab.Navigator>
+                <Tab.Screen name='1' component={ChatScreen} />
+                <Tab.Screen name='2' component={StatutScreen} />
+                <Tab.Screen name='3' component={CallScreen} />
+            </Tab.Navigator>
+            <StatusBar />
+        </NavigationContainer>
         </>
     );
 }
 const styles= StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: width,
+        height:height
+    },
+    images:{
+        width: width,
+        height:height
+    },
     container1:{
         position: 'relative',
         alignItems: 'stretch',
