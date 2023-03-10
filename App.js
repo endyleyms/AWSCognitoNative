@@ -35,7 +35,7 @@ function TabScreen() {
       name="Profile"
       component={Profile}
       options={{
-        title: 'Galery',
+        title: 'Gallery',
         headerStyle: {
           backgroundColor: '#2D0046',
         },
