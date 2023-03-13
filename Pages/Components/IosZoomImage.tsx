@@ -24,54 +24,85 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
 
     const panResponder = useRef(
         PanResponder.create({
+
             onMoveShouldSetPanResponder: (event, gesture) => {
                 return gesture.dx !== 0 && gesture.dy !== 0;
             },
-          onPanResponderMove: (event, gesture) => {
-            const touches = event.nativeEvent.touches;
-            if (touches.length === 2) {
-              const dx = touches[1].pageX - touches[0].pageX;
-              const dy = touches[1].pageY - touches[0].pageY;
-              const distance = Math.sqrt(dx * dx + dy * dy);
-              scale.setValue(distance / 200);
-              pan.setValue({
-                x: gesture.dx,
-                y: gesture.dy,
-              });
-            }
-          },
-          onPanResponderRelease: onPanResponderRelease,
-          onPanResponderTerminate: onPanResponderRelease,
+            onPanResponderMove: (event, gesture) => {
+                const touches = event.nativeEvent.touches;
+                if (touches.length === 2) {
+                const dx = touches[1].pageX - touches[0].pageX;
+                const dy = touches[1].pageY - touches[0].pageY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                scale.setValue(distance / 200);
+                pan.setValue({
+                    x: gesture.dx,
+                    y: gesture.dy,
+                });
+                }
+            },
+            onPanResponderRelease: onPanResponderRelease,
+            onPanResponderTerminate: onPanResponderRelease,
         })
       ).current;
+
+      const panResponder2 = PanResponder.create({
+        onMoveShouldSetPanResponder: (event, gesture) => {
+            return gesture.dx !== 0 && gesture.dy !== 0;
+        },
+        onPanResponderMove: Animated.event(
+          [
+            null,
+            { dx: pan.x, dy: pan.y }
+          ],
+          { useNativeDriver: false }
+        ),
+        onPanResponderRelease: () => {
+          Animated.spring(pan, {
+            toValue: { x: 0, y: 0 },
+            useNativeDriver: false
+          }).start();
+        }
+      });
 
 
 
     return (
         <View style={styles.container}>
-            <Animated.Image
-                resizeMode="contain"
-                source={{uri:ImageUrl}}
-                style={[styles.image,
-                    {transform: [
-                        { translateX: pan.x },
-                        { translateY: pan.y },
-                        { scale: scale },
-                    ]},
-                // {width: width, height: width},
-                    //{transform: [{translateX: -focalPoint.x}, {translateY: -focalPoint.y}, { scale: scale }, {translateX: focalPoint.x}, {translateY: focalPoint.y}]},
-                ]}
-                {...panResponder.panHandlers}
-                // onLayout={({ nativeEvent }) =>
-                // setFocalPoint({
-                // x: nativeEvent.layout.width / 2,
-                // y: nativeEvent.layout.height / 2,
-                // })}
-                // onLoad={(e) => {
-                //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
-                // }}
-                // onLoadEnd={()=>{setLoading(false);}}
-            />
+            {/* <Animated.View
+            {...panResponder2.panHandlers}
+            style={{
+                transform: [
+                  { translateX: pan.x },
+                  { translateY: pan.y },
+                ]
+            }}
+            > */}
+                <Animated.Image
+                    resizeMode="contain"
+                    source={{uri:ImageUrl}}
+                    style={[styles.image,
+                        {transform: [
+                            { scale: scale },
+                            { translateX: pan.x },
+                            { translateY: pan.y },
+                        ]},
+                    // {width: width, height: width},
+                        //{transform: [{translateX: -focalPoint.x}, {translateY: -focalPoint.y}, { scale: scale }, {translateX: focalPoint.x}, {translateY: focalPoint.y}]},
+                    ]}
+                    {...panResponder.panHandlers}
+                    {...panResponder2.panHandlers}
+                    // onLayout={({ nativeEvent }) =>
+                    // setFocalPoint({
+                    // x: nativeEvent.layout.width / 2,
+                    // y: nativeEvent.layout.height / 2,
+                    // })}
+                    // onLoad={(e) => {
+                    //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
+                    // }}
+                    // onLoadEnd={()=>{setLoading(false);}}
+                />
+            {/* </Animated.View> */}
         </View>
     );
 };
