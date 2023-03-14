@@ -11,15 +11,16 @@ interface inputProps {
 
 const IosZoomImage = ({ImageUrl}: inputProps)=>{
     const pan = useRef(new Animated.ValueXY()).current;
+    const [translate, setTranlate] = useState({x: pan.x, y:pan.y});
+    console.log('translate', translate)
     const scale = useRef(new Animated.Value(1)).current;
     console.log('scale', scale);
     const lastScale = useRef(1);
     const [lastMoveX, setLastMoveX] = useState(0);
     const [lastMoveY, setLastMoveY] = useState(0);
-    const onPinchGestureEvent = Animated.event(
-        [{ nativeEvent: { scale: scale } }],
-        { useNativeDriver: true }
-    );
+    console.log('lastMoveX', lastMoveX, 'lastMoveY', lastMoveY);
+
+
     const onPanResponderRelease = () => {
         lastScale.current *= scale._value;
         scale.setValue(1);
@@ -27,9 +28,13 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
 
     const panResponder = useRef(
         PanResponder.create({
-
+            onMoveShouldSetPanResponderCapture: () => true,
             onMoveShouldSetPanResponder: (event, gesture) => {
                 return gesture.dx !== 0 && gesture.dy !== 0;
+            },
+            onPanResponderGrant: (e, gestureState) => {
+                pan.setOffset({x: pan.x._value, y:pan.y._value})
+                pan.setValue({x: 0, y: 0});
             },
             onPanResponderMove: (event, gesture) => {
                 const touches = event.nativeEvent.touches;
@@ -39,7 +44,9 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 scale.setValue(distance / 200);
                 }else if (touches.length === 1 && scale._value > 1) {
-                    const dx = gesture.dx - (lastMoveX || 0);
+                    setLastMoveX(gesture.dx);
+                    setLastMoveY(gesture.dy);
+                    const dx = gesture.dx - (lastMoveX );
                     const dy = gesture.dy - (lastMoveY || 0);
                     pan.setValue({
                         x: dx,
@@ -84,8 +91,8 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
                     style={[styles.image,
                         {transform: [
                             { scale: scale },
-                            { translateX: pan.x },
-                            { translateY: pan.y },
+                            { translateX: translate.x },
+                            { translateY: translate.y },
                         ]},
                     // {width: width, height: width},
                         //{transform: [{translateX: -focalPoint.x}, {translateY: -focalPoint.y}, { scale: scale }, {translateX: focalPoint.x}, {translateY: focalPoint.y}]},
