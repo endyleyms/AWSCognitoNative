@@ -50,8 +50,8 @@ const Tab = createMaterialTopTabNavigator();
 export default function Profile({navigation}){
     return(
         <>
-        <NavigationContainer independent={true}>
-            <Tab.Navigator>
+        <NavigationContainer independent={true} >
+            <Tab.Navigator swipeEnabled={false}>
                 <Tab.Screen name='1' component={ChatScreen} />
                 <Tab.Screen name='2' component={StatutScreen} />
                 <Tab.Screen name='3' component={CallScreen} />

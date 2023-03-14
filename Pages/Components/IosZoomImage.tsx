@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions, Platform, Animated, Vibration, Alert, PanResponder } from 'react-native';
-import { PinchGestureHandler, PanGestureHandler, TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
+// import { PinchGestureHandler, PanGestureHandler, TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 const { width, height } = Dimensions.get('window');
@@ -12,7 +12,10 @@ interface inputProps {
 const IosZoomImage = ({ImageUrl}: inputProps)=>{
     const pan = useRef(new Animated.ValueXY()).current;
     const scale = useRef(new Animated.Value(1)).current;
+    console.log('scale', scale);
     const lastScale = useRef(1);
+    const [lastMoveX, setLastMoveX] = useState(0);
+    const [lastMoveY, setLastMoveY] = useState(0);
     const onPinchGestureEvent = Animated.event(
         [{ nativeEvent: { scale: scale } }],
         { useNativeDriver: true }
@@ -35,35 +38,32 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
                 const dy = touches[1].pageY - touches[0].pageY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 scale.setValue(distance / 200);
-                pan.setValue({
-                    x: gesture.dx,
-                    y: gesture.dy,
-                });
+                }else if (touches.length === 1 && scale._value > 1) {
+                    const dx = gesture.dx - (lastMoveX || 0);
+                    const dy = gesture.dy - (lastMoveY || 0);
+                    pan.setValue({
+                        x: dx,
+                        y: dy
+                    })
+                    Animated.event(
+                        [
+                          null,
+                          { dx: pan.x, dy: pan.y }
+                        ],
+                        { useNativeDriver: false }
+                    )
                 }
             },
-            onPanResponderRelease: onPanResponderRelease,
+            onPanResponderRelease: () => {
+                Animated.spring(pan, {
+                  toValue: { x: 0, y: 0 },
+                  useNativeDriver: false
+                }).start();
+            },
             onPanResponderTerminate: onPanResponderRelease,
         })
       ).current;
 
-      const panResponder2 = PanResponder.create({
-        onMoveShouldSetPanResponder: (event, gesture) => {
-            return gesture.dx !== 0 && gesture.dy !== 0;
-        },
-        onPanResponderMove: Animated.event(
-          [
-            null,
-            { dx: pan.x, dy: pan.y }
-          ],
-          { useNativeDriver: false }
-        ),
-        onPanResponderRelease: () => {
-          Animated.spring(pan, {
-            toValue: { x: 0, y: 0 },
-            useNativeDriver: false
-          }).start();
-        }
-      });
 
 
 
@@ -91,7 +91,7 @@ const IosZoomImage = ({ImageUrl}: inputProps)=>{
                         //{transform: [{translateX: -focalPoint.x}, {translateY: -focalPoint.y}, { scale: scale }, {translateX: focalPoint.x}, {translateY: focalPoint.y}]},
                     ]}
                     {...panResponder.panHandlers}
-                    {...panResponder2.panHandlers}
+                    // {...panResponder2.panHandlers}
                     // onLayout={({ nativeEvent }) =>
                     // setFocalPoint({
                     // x: nativeEvent.layout.width / 2,
