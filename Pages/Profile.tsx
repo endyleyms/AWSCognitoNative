@@ -6,20 +6,6 @@ import IosZoomImage from './Components/IosZoomImage';
 
 const { width, height } = Dimensions.get('window');
 
-const images = [
-    {
-      source: {
-        uri: 'https://static.scientificamerican.com/sciam/cache/…le/7A715AD8-449D-4B5A-ABA2C5D92D9B5A21_source.png',
-      },
-    },
-    {
-      source: {
-        uri: 'https://example.com/image2.jpg',
-      },
-    },
-    // add more images here
-  ];
-
 const ChatScreen = () => {
     return (
         <View style={styles.container}>

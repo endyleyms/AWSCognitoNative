@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions, Platform, Animated, Vibration, Alert, PanResponder } from 'react-native';
-// import { PinchGestureHandler, PanGestureHandler, TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { View, StyleSheet, Dimensions, Platform, Animated, PanResponder } from 'react-native';
 
 
 const { width, height } = Dimensions.get('window');
@@ -12,7 +11,7 @@ interface inputProps {
 const IosZoomImage = ({ ImageUrl }: inputProps) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const [translate, setTranlate] = useState({ x: pan.x, y: pan.y });
-    console.log('translate', translate);
+    const focalPoint = useRef(new Animated.ValueXY()).current;
     const scale = useRef(new Animated.Value(1)).current;
     const lastScale = useRef(1);
 
@@ -29,13 +28,23 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
             onMoveShouldSetPanResponder: () => true,
             onPanResponderMove: (event, gesture) => {
                 const touches = event.nativeEvent.touches;
-                if (touches.length === 2) {
+                if (touches.length === 2) { //pinch gesture
                     const dx = touches[1].pageX - touches[0].pageX;
                     const dy = touches[1].pageY - touches[0].pageY;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     scale.setValue(distance / 200);
-                }else if (scale._value > 1){
-                    Animated.event([null, { dx: pan.x, dy: pan.y }], {useNativeDriver: false})(event, gesture);
+                    const centerPoint = {
+                        x: -((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX - width) / 4),
+                        y: -((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY - height ) / 4),
+                    };
+                    const newFocalPoint = {
+                        x: centerPoint.x,
+                        y: centerPoint.y
+                      };
+                    focalPoint.setOffset(newFocalPoint)
+                    console.log('focal point', focalPoint)
+                }else if (scale._value > 1){ //Pan gesture
+                    Animated.event([null, { dx: pan.x, dy: pan.y }], {useNativeDriver:false})(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
                 }
             },
             onPanResponderRelease: () => {
@@ -45,41 +54,51 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
     ).current;
 
 
-        useEffect(()=>{console.log('translate', translate);},[translate])
 
     return (
         <View style={styles.container}>
-            <Animated.Image
-                resizeMode="contain"
-                source={{ uri: ImageUrl }}
-                style={[styles.image,
-                {
+            <Animated.View
+            style={[
+                 {
                     transform: [
-                        { scale: scale },
                         { translateX: translate.x.interpolate({
-                            inputRange: [0, width],
-                            outputRange: [0, width],
-                            extrapolate: 'identity'
+                            inputRange: [0.5, 2],
+                            outputRange: [0, 3],
                         })},
                         { translateY: translate.y.interpolate({
-                            inputRange: [0, height],
-                            outputRange: [0, height],
-                            extrapolate: 'identity'
+                            inputRange: [0.5, 2],
+                            outputRange: [0, 3],
                         }) },
                     ]
                 },
-                ]}
-                {...panResponder.panHandlers}
-            // onLayout={({ nativeEvent }) =>
-            // setFocalPoint({
-            // x: nativeEvent.layout.width / 2,
-            // y: nativeEvent.layout.height / 2,
-            // })}
-            // onLoad={(e) => {
-            //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
-            // }}
-            // onLoadEnd={()=>{setLoading(false);}}
-            />
+            ]}
+            >
+                <Animated.Image
+                    resizeMode="contain"
+                    source={{ uri: ImageUrl }}
+                    style={[styles.image,
+                    {
+                        transform: [
+                            { translateX: focalPoint.x },
+                            { translateY: focalPoint.y },
+                            { scale: scale },
+                            { translateX: focalPoint.x },
+                            { translateY: focalPoint.y },
+                        ]
+                    },
+                    ]}
+                    {...panResponder.panHandlers}
+                // onLayout={({ nativeEvent }) =>
+                // focalPoint.setValue({
+                // x: nativeEvent.layout.width / 2,
+                // y: nativeEvent.layout.height / 2,
+                // })}
+                // onLoad={(e) => {
+                //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
+                // }}
+                // onLoadEnd={()=>{setLoading(false);}}
+                />
+            </Animated.View>
         </View>
     );
 };
