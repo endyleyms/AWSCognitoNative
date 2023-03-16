@@ -6,63 +6,38 @@ import IosZoomImage from './Components/IosZoomImage';
 
 const { width, height } = Dimensions.get('window');
 
-// const imageurl = [
-//     {ImageUrl: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq' },
-//     {ImageUrl: 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'},
-//     {ImageUrl: 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg' }
-// ]
+const imageurl = [
+    {ImageUrl: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq' },
+    {ImageUrl: 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'},
+    {ImageUrl: 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg' }
+]
 
-const ImageScreen1 = () => {
-    return (
-        <View style={styles.container}>
-            <IosZoomImage ImageUrl={'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq'} />
-        </View>
-    );
-}
-
-const ImageScreen2 = () => {
-    return (
-        <View style={styles.container}>
-            <IosZoomImage ImageUrl={ 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'} />
-        </View>
-    );
-}
-
-const ImageScreen3 = () => {
-    return (
-        <View style={styles.container}>
-            <IosZoomImage ImageUrl={ 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg'} />
-        </View>
-    );
-}
+const mapComponent = imageurl.map((item)=>{
+    const component = ()=>{
+        return(
+            <View style={styles.container}>
+                <IosZoomImage ImageUrl={item.ImageUrl} />
+            </View>
+        )
+    }
+    return component
+})
+console.log('map component',  typeof mapComponent[0])
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function Profile({navigation}){
-    const [tab, setTab] =useState([
-        {
-            name: '1',
-            component:ImageScreen1
-        },
-        {
-            name: '2',
-            component:ImageScreen2
-        },
-        {
-            name: '3',
-            component:ImageScreen3
-        }
 
-    ])
     return(
         <>
         <NavigationContainer independent={true} >
             <Tab.Navigator
             swipeEnabled={false}
             >
-                {
+                {/* {
                     tab.map(tab => <Tab.Screen name={tab.name} component={tab.component} />)
-                }
+                } */}
+                {mapComponent.map((tab, index)=> <Tab.Screen name={index.toString()} component={tab} />)}
             </Tab.Navigator>
             <StatusBar />
         </NavigationContainer>
