@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar, Image, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -6,16 +6,21 @@ import IosZoomImage from './Components/IosZoomImage';
 
 const { width, height } = Dimensions.get('window');
 
-const ChatScreen = () => {
+// const imageurl = [
+//     {ImageUrl: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq' },
+//     {ImageUrl: 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'},
+//     {ImageUrl: 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg' }
+// ]
+
+const ImageScreen1 = () => {
     return (
         <View style={styles.container}>
-         {/* <Image source={{uri: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq'}} style={styles.images} resizeMode="contain" /> */}
             <IosZoomImage ImageUrl={'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq'} />
         </View>
     );
 }
 
-const StatutScreen = () => {
+const ImageScreen2 = () => {
     return (
         <View style={styles.container}>
             <IosZoomImage ImageUrl={ 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'} />
@@ -23,7 +28,7 @@ const StatutScreen = () => {
     );
 }
 
-const CallScreen = () => {
+const ImageScreen3 = () => {
     return (
         <View style={styles.container}>
             <IosZoomImage ImageUrl={ 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg'} />
@@ -34,15 +39,30 @@ const CallScreen = () => {
 const Tab = createMaterialTopTabNavigator();
 
 export default function Profile({navigation}){
+    const [tab, setTab] =useState([
+        {
+            name: '1',
+            component:ImageScreen1
+        },
+        {
+            name: '2',
+            component:ImageScreen2
+        },
+        {
+            name: '3',
+            component:ImageScreen3
+        }
+
+    ])
     return(
         <>
         <NavigationContainer independent={true} >
             <Tab.Navigator
             swipeEnabled={false}
             >
-                <Tab.Screen name='1' component={ChatScreen} />
-                <Tab.Screen name='2' component={StatutScreen} />
-                <Tab.Screen name='3' component={CallScreen} />
+                {
+                    tab.map(tab => <Tab.Screen name={tab.name} component={tab.component} />)
+                }
             </Tab.Navigator>
             <StatusBar />
         </NavigationContainer>
@@ -84,7 +104,7 @@ const styles= StyleSheet.create({
         position: 'relative',
         alignItems: 'stretch',
         top: '30%',
-        height: '100%',       
+        height: '100%',
     },
     buton:{
         backgroundColor: '#8100C7',

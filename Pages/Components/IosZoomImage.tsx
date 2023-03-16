@@ -13,15 +13,7 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
     const [translate, setTranlate] = useState({ x: pan.x, y: pan.y });
     const focalPoint = useRef(new Animated.ValueXY()).current;
     const scale = useRef(new Animated.Value(1)).current;
-    const lastScale = useRef(1);
-
-   // const horizontalMax = (width * scale - this.props.cropWidth) / 2 / this.scale;
-
-
-    const onPanResponderRelease = () => {
-        lastScale.current *= scale._value;
-        scale.setValue(1);
-    };
+    const [sizeImage, setSizeImage ] = useState({x: 0, y: height});
 
     const panResponder = useRef(
         PanResponder.create({
@@ -29,22 +21,30 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
             onPanResponderMove: (event, gesture) => {
                 const touches = event.nativeEvent.touches;
                 if (touches.length === 2) { //pinch gesture
+                    const scaleMovement = 200;
                     const dx = touches[1].pageX - touches[0].pageX;
                     const dy = touches[1].pageY - touches[0].pageY;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    scale.setValue(distance / 200);
-                    const centerPoint = {
-                        x: -((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX - width) / 4),
-                        y: -((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY - height ) / 4),
+                    const initalScale = Math.abs(distance / scaleMovement);
+                    const currentScale = scale._value;
+                    const newScale = currentScale + initalScale - 1;
+                    scale._value < 1 ?
+                        scale.setValue(1)
+                        : scale._value > 20 ?
+                            scale.setValue(20)
+                            : scale.setValue(newScale)
+                    const centerPoint = { // different focal point to pinch to zoom
+                        x: -((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX - (width)) / 5),
+                        y: -((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY - (height)) / 5),
                     };
                     const newFocalPoint = {
                         x: centerPoint.x,
                         y: centerPoint.y
-                      };
-                    focalPoint.setOffset(newFocalPoint)
+                    };
+                    focalPoint.setValue(newFocalPoint)
                     console.log('focal point', focalPoint)
-                }else if (scale._value > 1){ //Pan gesture
-                    Animated.event([null, { dx: pan.x, dy: pan.y }], {useNativeDriver:false})(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
+                } else if (scale._value > 1 && touches.length === 1) { //Pan gesture
+                    Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
                 }
             },
             onPanResponderRelease: () => {
@@ -58,20 +58,24 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
     return (
         <View style={styles.container}>
             <Animated.View
-            style={[
-                 {
-                    transform: [
-                        { translateX: translate.x.interpolate({
-                            inputRange: [0.5, 2],
-                            outputRange: [0, 3],
-                        })},
-                        { translateY: translate.y.interpolate({
-                            inputRange: [0.5, 2],
-                            outputRange: [0, 3],
-                        }) },
-                    ]
-                },
-            ]}
+                style={[
+                    {
+                        transform: [
+                            {
+                                translateX: translate.x.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 3],
+                                })
+                            },
+                            {
+                                translateY: translate.y.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 3],
+                                })
+                            },
+                        ]
+                    },
+                ]}
             >
                 <Animated.Image
                     resizeMode="contain"
@@ -88,14 +92,14 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                     },
                     ]}
                     {...panResponder.panHandlers}
+                // onLoad={(e) => {
+                //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
+                // }}
                 // onLayout={({ nativeEvent }) =>
                 // focalPoint.setValue({
                 // x: nativeEvent.layout.width / 2,
                 // y: nativeEvent.layout.height / 2,
                 // })}
-                // onLoad={(e) => {
-                //     setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
-                // }}
                 // onLoadEnd={()=>{setLoading(false);}}
                 />
             </Animated.View>
