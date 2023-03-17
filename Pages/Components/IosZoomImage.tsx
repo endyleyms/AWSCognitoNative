@@ -28,7 +28,7 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                     const initalScale = Math.abs(distance / scaleMovement);
                     const currentScale = scale._value;
                     const newScale = Math.abs(currentScale + initalScale - 1);
-                    if (scale._value < 1 && newScale < 1 && initalScale < 1 && scale._value < 2 && newScale <2 && initalScale < 2){
+                    if (scale._value < 1){
                         scale.setValue(1)
                         console.log('scaleOne', scale)
                         // pan.setValue({x: 0, y:0});
@@ -50,7 +50,7 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                         y: centerPoint.y
                     };
                     focalPoint.setValue(newFocalPoint)
-                } else if (scale._value > 1 && touches.length === 1) { //Pan gesture
+                } else if (scale._value >= 2 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
                 }
             },

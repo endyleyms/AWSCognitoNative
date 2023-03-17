@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar, Image, Dimensions, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import IosZoomImage from './Components/IosZoomImage';
@@ -37,7 +37,7 @@ export default function Profile({navigation}){
                 {/* {
                     tab.map(tab => <Tab.Screen name={tab.name} component={tab.component} />)
                 } */}
-                {mapComponent.map((tab, index)=> <Tab.Screen name={index.toString()} component={tab} />)}
+                {mapComponent.map((tab, index)=> <Tab.Screen name={(index + 1).toString()} component={tab} />)}
             </Tab.Navigator>
             <StatusBar />
         </NavigationContainer>
