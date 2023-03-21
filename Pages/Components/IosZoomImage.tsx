@@ -28,35 +28,37 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                     const initalScale = Math.abs(distance / scaleMovement);
                     const currentScale = scale._value;
                     const newScale = Math.abs(currentScale + initalScale - 1);
-                    if (scale._value < 1){
+
+                    if (scale._value < 1 || newScale < 1 ){
                         scale.setValue(1)
-                        console.log('scaleOne', scale)
-                        // pan.setValue({x: 0, y:0});
-                        // focalPoint.setValue({x:0, y:0})
-                        console.log('pan scale 1', pan, 'focalpoint scale 1', focalPoint)
+                        pan.setValue({x: 0, y:0});
+                        setTranlate({x:pan.x, y:pan.y})
                     }else if(scale._value > 20 && newScale > 20){
                         scale.setValue(20)
-                        console.log('scaletwenty', scale)
-                    }else if (newScale > 1 && newScale < 20){
+                    }else if (newScale >= 1 && newScale < 20){
                         scale.setValue(newScale)
-                        console.log('new scale', scale)
+                        if (newScale < 2){
+                            pan.setValue({x:0, y:0});
+                            setTranlate({x:pan.x, y:pan.y})
+                            console.log('pan scale menor a 2', pan, translate)
+                        }else{
+                            const centerPoint = { // different focal point to pinch to zoom
+                                x: -(((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX) / 2) - width / 2 ),
+                                y: -(((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY) / 2) - height / 2),
+                            };
+                            const newFocalPoint = {
+                                x: centerPoint.x,
+                                y: centerPoint.y
+                            };
+                            focalPoint.setValue(newFocalPoint)
+                        }
                     }
-                    const centerPoint = { // different focal point to pinch to zoom
-                        x: -((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX - (width)) / 2),
-                        y: -((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY - (height)) / 2),
-                    };
-                    const newFocalPoint = {
-                        x: centerPoint.x,
-                        y: centerPoint.y
-                    };
-                    focalPoint.setValue(newFocalPoint)
                 } else if (scale._value >= 2 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
                 }
             },
             onPanResponderRelease: () => {
                 pan.extractOffset();
-                //scale.extractOffset();
             },
         }),
     ).current;
@@ -91,11 +93,11 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                     style={[styles.image,
                     {
                         transform: [
-                            { translateX: focalPoint.x },
-                            { translateY: focalPoint.y },
+                            // {translateX: focalPoint.x},
+                            // {translateY: focalPoint.y},
                             { scale: scale },
-                            // { translateX: focalPoint.x },
-                            // { translateY: focalPoint.y },
+                            {translateX: focalPoint.x},
+                            {translateY: focalPoint.y},
                         ]
                     },
                     ]}

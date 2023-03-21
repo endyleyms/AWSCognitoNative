@@ -22,7 +22,6 @@ const mapComponent = imageurl.map((item)=>{
     }
     return component
 })
-console.log('map component',  typeof mapComponent[0])
 
 const Tab = createMaterialTopTabNavigator();
 
