@@ -6,9 +6,10 @@ const { width, height } = Dimensions.get('window');
 
 interface inputProps {
     ImageUrl: string,
+    setBorderImage: CallableFunction
 }
 
-const IosZoomImage = ({ ImageUrl }: inputProps) => {
+const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
     const pan = useRef(new Animated.ValueXY()).current;
     const [translate, setTranlate] = useState({ x: pan.x, y: pan.y });
     const focalPoint = useRef(new Animated.ValueXY()).current;
@@ -46,12 +47,12 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                         }
                         const newFocalPoint = {
                             x: (((centerPoint.x) * newScale) / scale._value) ,
-                            y: centerPoint.y
+                            y: centerPoint.y / newScale
                         };
                         focalPoint.setValue(newFocalPoint)
                         console.log('focal point', focalPoint)
                     }
-                } else if (scale._value > 1 && touches.length === 1) { //Pan gesture
+                } else if (scale._value > 2 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
                     console.log('translate', translate)
                 }
@@ -61,6 +62,8 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
             },
         }),
     ).current;
+
+    useEffect(()=>{},[])
 
     return (
         <View style={styles.container}>

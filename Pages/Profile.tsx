@@ -13,21 +13,22 @@ const imageurl = [
     {ImageUrl: 'https://previews.123rf.com/images/farang/farang1201/farang120100042/11875193-vista-de-un-oc%C3%A9ano-brumoso-de-la-ma%C3%B1ana-tiro-de-larga-exposici%C3%B3n-composici%C3%B3n-panor%C3%A1mica.jpg'}
 ]
 
-const mapComponent = imageurl.map((item)=>{
-    const component = ()=>{
-        return(
-            <View style={styles.container}>
-                <IosZoomImage ImageUrl={item.ImageUrl} />
-            </View>
-        )
-    }
-    return component
-})
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function Profile({navigation}){
+    const [borderImage, setBorderImage]= useState();
 
+    const mapComponent = imageurl.map((item)=>{
+        const component = ()=>{
+            return(
+                <View style={styles.container}>
+                    <IosZoomImage ImageUrl={item.ImageUrl} setBorderImage={setBorderImage} />
+                </View>
+            )
+        }
+        return component
+    })
     return(
         <>
         <NavigationContainer independent={true} >
