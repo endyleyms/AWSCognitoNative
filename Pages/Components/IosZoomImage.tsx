@@ -13,7 +13,7 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
     const [translate, setTranlate] = useState({ x: pan.x, y: pan.y });
     const focalPoint = useRef(new Animated.ValueXY()).current;
     const scale = useRef(new Animated.Value(1)).current;
-    const [sizeImage, setSizeImage ] = useState({x: 0, y: height});
+    const [sizeImage, setSizeImage] = useState({ x: 0, y: height });
 
     const panResponder = useRef(
         PanResponder.create({
@@ -22,39 +22,38 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                 const touches = event.nativeEvent.touches;
                 if (touches.length === 2) { //pinch gesture
                     const scaleMovement = 200;
-                    const dx = touches[1].pageX - touches[0].pageX;
-                    const dy = touches[1].pageY - touches[0].pageY;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    // const dx = touches[1].pageX - touches[0].pageX;
+                    // const dy = touches[1].pageY - touches[0].pageY;
+                    const distance = Math.sqrt(
+                        Math.pow(event.nativeEvent.touches[0].pageX - event.nativeEvent.touches[1].pageX, 2)
+                        + Math.pow(event.nativeEvent.touches[0].pageY - event.nativeEvent.touches[1].pageY, 2)
+                    );
                     const initalScale = Math.abs(distance / scaleMovement);
                     const currentScale = scale._value;
                     const newScale = Math.abs(currentScale + initalScale - 1);
 
-                    if (scale._value < 1 || newScale < 1 ){
+                    if (scale._value < 1 || newScale < 1) {
                         scale.setValue(1)
-                        pan.setValue({x: 0, y:0});
-                        setTranlate({x:pan.x, y:pan.y})
-                    }else if(scale._value > 20 && newScale > 20){
+                        pan.setValue({ x: 0, y: 0 });
+                        setTranlate({ x: pan.x, y: pan.y })
+                    } else if (scale._value > 20 && newScale > 20) {
                         scale.setValue(20)
-                    }else if (newScale >= 1 && newScale < 20){
+                    } else if (newScale >= 1 && newScale < 20) {
                         scale.setValue(newScale)
-                        if (newScale < 2){
-                            pan.setValue({x:0, y:0});
-                            setTranlate({x:pan.x, y:pan.y})
-                            console.log('pan scale menor a 2', pan, translate)
-                        }else{
-                            const centerPoint = { // different focal point to pinch to zoom
-                                x: -(((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX) / 2) - width / 2 ),
-                                y: -(((event.nativeEvent.touches[0].pageY + event.nativeEvent.touches[1].pageY) / 2) - height / 2),
-                            };
-                            const newFocalPoint = {
-                                x: centerPoint.x,
-                                y: centerPoint.y
-                            };
-                            focalPoint.setValue(newFocalPoint)
+                        const centerPoint = { // different focal point to pinch to zoom
+                            x: -(((event.nativeEvent.touches[0].pageX + event.nativeEvent.touches[1].pageX) / 2) - width / 2),
+                            y: -((event.nativeEvent.touches[0].pageY - event.nativeEvent.touches[1].pageY) / 2)
                         }
+                        const newFocalPoint = {
+                            x: (((centerPoint.x) * newScale) / scale._value) ,
+                            y: centerPoint.y
+                        };
+                        focalPoint.setValue(newFocalPoint)
+                        console.log('focal point', focalPoint)
                     }
-                } else if (scale._value >= 2 && touches.length === 1) { //Pan gesture
+                } else if (scale._value > 1 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
+                    console.log('translate', translate)
                 }
             },
             onPanResponderRelease: () => {
@@ -62,8 +61,6 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
             },
         }),
     ).current;
-
-
 
     return (
         <View style={styles.container}>
@@ -93,18 +90,16 @@ const IosZoomImage = ({ ImageUrl }: inputProps) => {
                     style={[styles.image,
                     {
                         transform: [
-                            // {translateX: focalPoint.x},
-                            // {translateY: focalPoint.y},
                             { scale: scale },
-                            {translateX: focalPoint.x},
-                            {translateY: focalPoint.y},
+                            { translateX: focalPoint.x },
+                            { translateY: focalPoint.y },
                         ]
                     },
                     ]}
                     {...panResponder.panHandlers}
-                onLoad={(e) => {
-                    setSizeImage({x:e.nativeEvent.source.width, y: e.nativeEvent.source.height });
-                }}
+                    onLoad={(e) => {
+                        setSizeImage({ x: e.nativeEvent.source.width, y: e.nativeEvent.source.height });
+                    }}
                 // onLayout={({ nativeEvent }) =>
                 // focalPoint.setValue({
                 // x: nativeEvent.layout.width / 2,

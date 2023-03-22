@@ -9,7 +9,8 @@ const { width, height } = Dimensions.get('window');
 const imageurl = [
     {ImageUrl: 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSbywUFuXvFMZ1dqCi--Qc4bjlee40_0qvyaggtR1fWqbMQtsT7GfjWZj4oeOf5lRNq' },
     {ImageUrl: 'https://i.guim.co.uk/img/media/90e8c9ef02b4b18c60f378d9a72665bbae9a1917/225_0_3750_2251/master/3750.jpg?width=465&quality=85&dpr=1&s=none'},
-    {ImageUrl: 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg' }
+    {ImageUrl: 'https://www.realsimple.com/thmb/7KXyUV7RHuoQEHbyGrv7j6m7U0U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orchid-care-tips-53e826a2bf20448a9c58a0cab2254430.jpg' },
+    {ImageUrl: 'https://previews.123rf.com/images/farang/farang1201/farang120100042/11875193-vista-de-un-oc%C3%A9ano-brumoso-de-la-ma%C3%B1ana-tiro-de-larga-exposici%C3%B3n-composici%C3%B3n-panor%C3%A1mica.jpg'}
 ]
 
 const mapComponent = imageurl.map((item)=>{
