@@ -46,15 +46,13 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
                             y: -((event.nativeEvent.touches[0].pageY - event.nativeEvent.touches[1].pageY) / 2)
                         }
                         const newFocalPoint = {
-                            x: (((centerPoint.x) * newScale) / scale._value) ,
+                            x: (((centerPoint.x) * newScale) / scale._value),
                             y: centerPoint.y / newScale
                         };
                         focalPoint.setValue(newFocalPoint)
-                        console.log('focal point', focalPoint)
                     }
-                } else if (scale._value > 2 && touches.length === 1) { //Pan gesture
+                } else if (scale._value >= 2 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
-                    console.log('translate', translate)
                 }
             },
             onPanResponderRelease: () => {
@@ -63,7 +61,23 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
         }),
     ).current;
 
-    useEffect(()=>{},[])
+
+    // useEffect(()=>{
+    //     if(translate.x._value <= -(((width * scale._value) - (width / 2))) || translate.x._value >= ((width * scale._value) - (width / 2)) || scale._value === 1){
+    //         setBorderImage(true);
+    //     }else{
+    //         setBorderImage(false);
+    //     }
+    //     console.log('useeffect', translate.x._value, Math.pow((width * scale._value)- width, 2), width )
+    // },[translate.x, width, scale]);
+
+    pan.addListener((pan) => {
+        console.log('pan',pan.x)
+        //console.log('widt * scale',((width * e.value) - width) / 2)
+        // scale.addListener((e) => {
+        //     console.log('widt /2',(width ) / 2)
+        // })
+    });
 
     return (
         <View style={styles.container}>

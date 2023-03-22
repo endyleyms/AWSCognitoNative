@@ -17,7 +17,8 @@ const imageurl = [
 const Tab = createMaterialTopTabNavigator();
 
 export default function Profile({navigation}){
-    const [borderImage, setBorderImage]= useState();
+    const [borderImage, setBorderImage]= useState(false);
+    console.log('boder', borderImage)
 
     const mapComponent = imageurl.map((item)=>{
         const component = ()=>{
