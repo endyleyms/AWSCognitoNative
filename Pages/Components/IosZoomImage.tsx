@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, } from 'react';
 import { View, StyleSheet, Dimensions, Platform, Animated, PanResponder } from 'react-native';
 
 
@@ -6,15 +6,14 @@ const { width, height } = Dimensions.get('window');
 
 interface inputProps {
     ImageUrl: string,
-    setBorderImage: CallableFunction
+    setBorderImage: CallableFunction,
+    //setPanBorder: any
 }
 
 const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
     const pan = useRef(new Animated.ValueXY()).current;
-    const [translate, setTranlate] = useState({ x: pan.x, y: pan.y });
     const focalPoint = useRef(new Animated.ValueXY()).current;
     const scale = useRef(new Animated.Value(1)).current;
-    const [sizeImage, setSizeImage] = useState({ x: 0, y: height });
 
     const panResponder = useRef(
         PanResponder.create({
@@ -23,8 +22,6 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
                 const touches = event.nativeEvent.touches;
                 if (touches.length === 2) { //pinch gesture
                     const scaleMovement = 200;
-                    // const dx = touches[1].pageX - touches[0].pageX;
-                    // const dy = touches[1].pageY - touches[0].pageY;
                     const distance = Math.sqrt(
                         Math.pow(event.nativeEvent.touches[0].pageX - event.nativeEvent.touches[1].pageX, 2)
                         + Math.pow(event.nativeEvent.touches[0].pageY - event.nativeEvent.touches[1].pageY, 2)
@@ -35,8 +32,6 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
 
                     if (scale._value < 1 || newScale < 1) {
                         scale.setValue(1)
-                        pan.setValue({ x: 0, y: 0 });
-                        setTranlate({ x: pan.x, y: pan.y })
                     } else if (scale._value > 20 && newScale > 20) {
                         scale.setValue(20)
                     } else if (newScale >= 1 && newScale < 20) {
@@ -50,6 +45,8 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
                             y: centerPoint.y / newScale
                         };
                         focalPoint.setValue(newFocalPoint)
+                    }else if( pan.x._value !==0 && pan.y._value !== 0 && newScale === 1){
+                        pan.setValue({ x: 0, y: 0 });
                     }
                 } else if (scale._value >= 2 && touches.length === 1) { //Pan gesture
                     Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false })(event, { ...gesture, dx: gesture.dx / scale._value, dy: gesture.dy / scale._value });
@@ -61,23 +58,61 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
         }),
     ).current;
 
+    Animated.parallel([
+        Animated.timing(focalPoint, {
+            toValue: focalPoint.y,
+            duration: 100,
+            useNativeDriver: false,
+        }),
+        Animated.timing(focalPoint, {
+            toValue: focalPoint.y,
+            duration: 100,
+            useNativeDriver: false,
+        }),
+      ]).start();
+
+    // pan.addListener((pan) => {
+    //     console.log('pan listener', pan.x);
+    //     // setPanBorder(pan.x)
+    // })
+    // scale.addListener((scale)=>{
+    //     console.log('scale listener', scale.value)
+    //     // setScaleBorder(scale.value)
+    // })
 
     // useEffect(()=>{
-    //     if(translate.x._value <= -(((width * scale._value) - (width / 2))) || translate.x._value >= ((width * scale._value) - (width / 2)) || scale._value === 1){
+    //     console.log('useEffect')
+    //     if(translate.x._value <= -(((width * scale._value) - (width))/ 6) || translate.x._value >= ((width * scale._value) - (width)) / 6 || scale._value === 1){
     //         setBorderImage(true);
     //     }else{
     //         setBorderImage(false);
     //     }
-    //     console.log('useeffect', translate.x._value, Math.pow((width * scale._value)- width, 2), width )
-    // },[translate.x, width, scale]);
 
-    pan.addListener((pan) => {
-        console.log('pan',pan.x)
-        //console.log('widt * scale',((width * e.value) - width) / 2)
-        // scale.addListener((e) => {
-        //     console.log('widt /2',(width ) / 2)
-        // })
-    });
+    // },[translate, scale])
+
+    useEffect(() => {
+        let newScale = scale._value
+        let newPan = {x:0, y:0}
+        const listenerScale = scale.addListener((scale) => {
+            newScale = scale.value
+        });
+
+        const listenerPan = pan.addListener((pan) => {
+            newPan = pan
+        });
+        //newPan.x === -((width *  newScale) - (width) / 6 ) || newPan.x === ((width * newScale) - (width) / 6 ) ||
+        if( newScale !== 1 && newPan.x < 0 && newPan.x > 0){
+          setBorderImage(false);
+        }else {
+          setBorderImage(true);
+        }
+        return () => {
+            //pan.removeListener(listenerPan);
+            scale.removeListener(listenerScale)
+            pan.removeListener(listenerPan)
+        };
+      }, [])
+
 
     return (
         <View style={styles.container}>
@@ -86,13 +121,13 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
                     {
                         transform: [
                             {
-                                translateX: translate.x.interpolate({
+                                translateX: pan.x.interpolate({
                                     inputRange: [0, 1],
                                     outputRange: [0, 3],
                                 })
                             },
                             {
-                                translateY: translate.y.interpolate({
+                                translateY: pan.y.interpolate({
                                     inputRange: [0, 1],
                                     outputRange: [0, 3],
                                 })
@@ -114,9 +149,6 @@ const IosZoomImage = ({ ImageUrl, setBorderImage }: inputProps) => {
                     },
                     ]}
                     {...panResponder.panHandlers}
-                    onLoad={(e) => {
-                        setSizeImage({ x: e.nativeEvent.source.width, y: e.nativeEvent.source.height });
-                    }}
                 // onLayout={({ nativeEvent }) =>
                 // focalPoint.setValue({
                 // x: nativeEvent.layout.width / 2,
